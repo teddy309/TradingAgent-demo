@@ -1,0 +1,43 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+infra/sandbox/.env
+
+# Hermes runtime state
+.hermes/
+hermes-data/
+
+# Brokerage credentials and account data
+*credential*
+*credentials*
+*account*.json
+*account*.yaml
+*account*.yml
+*account*.csv
+*trade*.csv
+*orders*.json
+*positions*.json
+
+# Private research and trading artifacts
+data/
+reports/private/
+strategies/private/
+llm-wiki/
+vault/
+
+# Python and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+coverage.xml
+.coverage
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

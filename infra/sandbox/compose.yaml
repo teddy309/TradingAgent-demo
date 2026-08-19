@@ -1,0 +1,71 @@
+name: ${COMPOSE_PROJECT_NAME:-tradingagent}
+
+services:
+  hermes-sandbox:
+    build:
+      context: ../..
+      dockerfile: infra/sandbox/Dockerfile
+      args:
+        HERMES_BASE_IMAGE: nousresearch/hermes-agent:${HERMES_IMAGE_TAG:-latest}
+    image: tradingagent/hermes-sandbox:${HERMES_IMAGE_TAG:-latest}
+    container_name: tradingagent-hermes-sandbox
+    restart: unless-stopped
+    command: ["gateway", "run"]
+    env_file:
+      - .env
+    environment:
+      HOME: /opt/data
+      TZ: Asia/Seoul
+      DISPLAY: ":1"
+      XDG_RUNTIME_DIR: /opt/data/run
+      HERMES_DASHBOARD: "1"
+      HERMES_DASHBOARD_HOST: 0.0.0.0
+      HERMES_DASHBOARD_PORT: "9119"
+      HERMES_REDACT_SECRETS: "true"
+      HERMES_WRITE_SAFE_ROOT: /opt/data:/workspace/trading-agent:/knowledge/trading
+      NOVNC_GEOMETRY: 1440x900
+    ports:
+      - "127.0.0.1:${NOVNC_PORT:-6080}:6080"
+      - "127.0.0.1:${HERMES_DASHBOARD_PORT:-9119}:9119"
+    volumes:
+      - hermes-data:/opt/data
+      - ../..:/workspace/trading-agent:rw
+      - type: bind
+        source: ${LLM_WIKI_PATH:?Run ./scripts/sandbox.sh bootstrap first}
+        target: /knowledge/trading
+        read_only: false
+    working_dir: /workspace/trading-agent
+    read_only: true
+    tmpfs:
+      # s6-overlay extracts and executes its stage binaries under /run.
+      - /run:rw,exec,nosuid,size=64m
+      - /tmp:rw,noexec,nosuid,size=512m
+      - /var/tmp:rw,noexec,nosuid,size=256m
+    shm_size: 512m
+    pids_limit: 512
+    cpus: 2.0
+    mem_limit: 4g
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          curl -fsS http://127.0.0.1:6080/vnc.html >/dev/null &&
+          curl -fsS http://127.0.0.1:9119/api/status >/dev/null
+      interval: 15s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+
+volumes:
+  hermes-data:
+    name: tradingagent-hermes-data

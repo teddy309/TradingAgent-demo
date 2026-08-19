@@ -1,0 +1,14 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+.hermes
+data
+reports/private
+strategies/private
+llm-wiki
+vault
+__pycache__
+.pytest_cache
+.venv

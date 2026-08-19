@@ -1,0 +1,20 @@
+#!/command/with-contenv sh
+set -eu
+
+export HOME=/opt/data
+export USER=hermes
+export LOGNAME=hermes
+
+geometry="${NOVNC_GEOMETRY:-1440x900}"
+
+exec s6-setuidgid hermes /usr/bin/Xtigervnc :1 \
+    -desktop TradingAgentSandbox \
+    -geometry "${geometry}" \
+    -depth 24 \
+    -rfbport 5901 \
+    -rfbauth /opt/data/.vnc/passwd \
+    -SecurityTypes VncAuth \
+    -localhost yes \
+    -AlwaysShared \
+    -DisconnectClients=0 \
+    -ac
