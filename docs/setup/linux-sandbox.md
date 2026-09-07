@@ -1,5 +1,7 @@
 # Linux sandbox setup
 
+For recovery, GUI browser implementation, and the staged trading-system rollout, follow [the execution plan](execution-plan.md) first. This page describes the original sandbox baseline.
+
 ## Purpose
 
 This setup runs Hermes Agent, its Gateway, Cron scheduler, dashboard, terminal, and a visual Linux desktop inside one Docker container backed by WSL2. Windows Hermes Desktop acts as a remote client. noVNC is an operational inspection surface, not the agent transport.

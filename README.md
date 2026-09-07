@@ -31,6 +31,8 @@ The raw VNC port, Docker socket, and Hermes API port are not exposed.
 
 ## Quick start
 
+기존 환경 복구 또는 다음 개발 작업을 시작할 때는 [실행계획](docs/setup/execution-plan.md)의 E0부터 따른다. 아래 명령만으로 GUI 브라우저 추가와 전체 모의투자 시스템 구현이 완료되지는 않는다.
+
 Run from Ubuntu in WSL2:
 
 ```bash
