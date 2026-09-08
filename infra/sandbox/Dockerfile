@@ -6,10 +6,15 @@ USER root
 RUN apt-get -o Acquire::Retries=3 update \
     && DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=3 install -y --no-install-recommends \
         dbus-x11 \
+        chromium \
+        fonts-dejavu-core \
+        fonts-noto-cjk \
+        fonts-noto-color-emoji \
         netcat-openbsd \
         novnc \
         tigervnc-standalone-server \
         tigervnc-tools \
+        xdg-utils \
         websockify \
         x11-utils \
         xfce4 \

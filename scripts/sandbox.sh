@@ -147,13 +147,13 @@ case "${command_name}" in
         compose logs --follow --tail=200
         ;;
     shell)
-        compose exec hermes-sandbox bash
+        compose exec --user hermes hermes-sandbox bash
         ;;
     setup)
-        compose exec hermes-sandbox hermes setup
+        compose exec --user hermes hermes-sandbox hermes setup
         ;;
     doctor)
-        compose exec hermes-sandbox hermes doctor
+        compose exec --user hermes hermes-sandbox hermes doctor
         ;;
     *)
         usage

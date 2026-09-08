@@ -15,8 +15,13 @@ services:
       - .env
     environment:
       HOME: /opt/data
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
       TZ: Asia/Seoul
       DISPLAY: ":1"
+      BROWSER: chromium
+      PATH: /opt/data/bin:/opt/hermes/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      XDG_CURRENT_DESKTOP: XFCE
       XDG_RUNTIME_DIR: /opt/data/run
       HERMES_DASHBOARD: "1"
       HERMES_DASHBOARD_HOST: 0.0.0.0
