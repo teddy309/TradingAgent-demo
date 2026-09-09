@@ -2,6 +2,9 @@
 
 ## Scope
 
+- For research/report tasks, first read `docs/agent/trading-wiki.md` and the private Wiki's `AGENTS.md`.
+- Use `python -m trading_agent.cli` for KIS reads and ledger operations. Never request or inspect KIS secrets.
+
 - Work only on the `develop` branch unless the user explicitly requests another branch.
 - Never merge or push directly to `main`.
 - The public repository documents infrastructure, interfaces, tests, and sanitized operational processes.
@@ -19,6 +22,7 @@
 - Never read, print, log, commit, or summarize brokerage secrets, account identifiers, dashboard passwords, VNC passwords, tokens, or personal information.
 - Never write secrets into Markdown, source files, fixtures, screenshots, chat output, Git history, or the Obsidian Vault.
 - Local secrets belong only in ignored runtime secret stores such as `infra/sandbox/.env` or the Hermes data volume.
+- Exception by service boundary: KIS inputs belong in the repository parent's `.private/kis.env`, mounted only into `kis-proxy`. Never read that file or add KIS values to the Hermes environment.
 - Use synthetic identifiers and synthetic market/trade data in examples and tests.
 
 ## Change records

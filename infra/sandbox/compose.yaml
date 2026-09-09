@@ -29,12 +29,15 @@ services:
       HERMES_REDACT_SECRETS: "true"
       HERMES_WRITE_SAFE_ROOT: /opt/data:/workspace/trading-agent:/knowledge/trading
       NOVNC_GEOMETRY: 1440x900
+      PYTHONPATH: /workspace/trading-agent/src
     ports:
       - "127.0.0.1:${NOVNC_PORT:-6080}:6080"
       - "127.0.0.1:${HERMES_DASHBOARD_PORT:-9119}:9119"
     volumes:
       - hermes-data:/opt/data
-      - ../..:/workspace/trading-agent:rw
+      - ../..:/workspace/trading-agent:ro
+      # Hide the existing dashboard secret file inside the repository mount.
+      - /dev/null:/workspace/trading-agent/infra/sandbox/.env:ro
       - type: bind
         source: ${LLM_WIKI_PATH:?Run ./scripts/sandbox.sh bootstrap first}
         target: /knowledge/trading
@@ -71,6 +74,37 @@ services:
       retries: 12
       start_period: 60s
 
+  kis-proxy:
+    build:
+      context: ../..
+      dockerfile: infra/kis/Dockerfile
+    image: tradingagent/kis-proxy:readonly-v1
+    restart: unless-stopped
+    secrets:
+      - kis_env
+    volumes:
+      - trading-ledger:/state
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=16m
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 32
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+secrets:
+  kis_env:
+    # Outside the checkout mounted into Hermes; never add to sandbox .env.
+    file: ../../../.private/kis.env
+
 volumes:
   hermes-data:
     name: tradingagent-hermes-data
+  trading-ledger:
+    name: tradingagent-ledger

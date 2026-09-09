@@ -58,3 +58,8 @@ Full instructions: [Linux sandbox setup](docs/setup/linux-sandbox.md)
 This repository may contain architecture, schemas, synthetic examples, tests, runbooks, ADRs, and sanitized progress notes. It must not contain brokerage keys, account details, raw transactions, portfolio values, private strategy rules, or Obsidian content.
 
 See [Public sharing guide](docs/operations/public-sharing.md) and [Security policy](SECURITY.md).
+# KIS / SQLite / Wiki quick entry
+
+The read-only research foundation is available. Start with [the private setup runbook](docs/runbooks/kis-wiki.md)
+and [the Hermes workflow](docs/agent/trading-wiki.md). KIS keys go outside this checkout, never in its sandbox `.env`.
+Live KIS verification requires user-entered VTS inputs. Orders and performance evaluation are not enabled.

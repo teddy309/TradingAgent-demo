@@ -10,5 +10,10 @@ strategies/private
 llm-wiki
 vault
 __pycache__
+**/__pycache__
+**/*.pyc
+**/*.env
+.private
+**/*.sqlite3*
 .pytest_cache
 .venv

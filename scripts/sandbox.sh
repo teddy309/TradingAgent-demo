@@ -78,18 +78,9 @@ env_value() {
 
 validate() {
     need_command docker
+    need_command python3
     compose config --quiet
-
-    local rendered
-    rendered="$(compose config --format json | tr -d '[:space:]')"
-    [[ "${rendered}" == *'"host_ip":"127.0.0.1"'* ]] \
-        || die "compose validation failed: published ports must bind to 127.0.0.1"
-    [[ "${rendered}" != *'"published":"5901"'* ]] \
-        || die "compose validation failed: raw VNC port 5901 must not be published"
-    [[ "${rendered}" != *'docker.sock'* ]] \
-        || die "compose validation failed: Docker socket must not be mounted"
-
-    printf 'compose and security contract validation passed\n'
+    compose config --format json | python3 "${ROOT_DIR}/scripts/validate-compose.py"
 }
 
 status() {

@@ -19,7 +19,7 @@ if [[ -n "${private_paths}" ]]; then
     fail=1
 fi
 
-if git grep -nEI \
+if git grep --cached -lEI \
     '(app[_ -]?secret|access[_ -]?token|account[_ -]?(no|number)|cano)[[:space:]]*[:=][[:space:]]*[^<${][^ ]+' \
     -- ':!scripts/validate-public-repo.sh' ':!*.example' >/tmp/tradingagent-secret-scan.txt; then
     printf 'error: possible secret or account identifier found in tracked content\n' >&2

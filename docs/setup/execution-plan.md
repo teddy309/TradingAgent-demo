@@ -2,6 +2,13 @@
 
 작성일: 2026-09-08. 이 문서가 초기 로드맵보다 우선한다. 현재는 계획이며 각 체크박스는 검증 후에만 완료 처리한다.
 
+2026-09-09 구현 상태 보충: [KIS/Wiki 운영 절차](../runbooks/kis-wiki.md)를 따른다.
+E1/E2 런타임 결과는 9월 8일 진행 기록, 새 조회·원장·Wiki 기반은 9월 9일 진행 기록을 참고한다.
+아래 미구현 명령 계약 중 `kis-readonly-smoke`는 이제 `python -m trading_agent.cli`로 제공한다.
+검증은 현재 표준 라이브러리 `PYTHONPATH=src python3 -m unittest discover -s tests -v`를 사용한다.
+`run-once --mode shadow`, 주문·체결 원장 및 자동 Cron은 아직 미구현이다.
+Wiki 구조는 사용자와 합의한 Research/Strategies/Decisions/Daily/Reviews를 사용하며 `wiki-seed`가 기준이다.
+
 ## 실행 원칙과 현재 상태
 
 - 코드 작업은 `develop`에서 수행한다. `main` 병합은 사용자가 한다.

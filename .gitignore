@@ -35,6 +35,9 @@ __pycache__/
 venv/
 coverage.xml
 .coverage
+*.sqlite3
+*.sqlite3-*
+.private/
 
 # IDE / OS
 .idea/
